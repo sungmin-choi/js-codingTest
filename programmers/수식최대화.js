@@ -1,11 +1,11 @@
-let op=[['*','+','-'],['*','-','+'],
+let operation=[['*','+','-'],['*','-','+'],
         ['+','*','-'],['+','-','*'],
         ['-','*','+'],['-','+','*']];
 
 let expression="100-200*300-500+20";
 let num="";
 let ex_array=[];
-
+let answer=0;
 function calculator(a,b,operator){
     if(operator==='*') return parseInt(a)*parseInt(b);
     else if(operator==='+')return parseInt(a)+parseInt(b);
@@ -27,17 +27,21 @@ for(let i=0;i<expression.length;i++){
     }
 }
 
-for(let i=0;i<7;i++){
-    let arr=Object.assign([],ex_array);
-    let total=0;
-    for(let j=0;j<3;j++){
-        for(let k=0;k<arr.length;k++){
-            if(arr[k]===op[i][j]){
-                total+=calculator(arr[k-1],arr[k+1],arr[k]);
-                arr.splice(k+2,0,total);
-                arr.splice(k-1,3);
-                k=0;
+for(let op of operation){
+    let s=JSON.parse(JSON.stringify(ex_array));
+    for(let i=0;i<op.length;i++){
+        for(let j=0;j<s.length;j++){
+            if(s[j]===op[i]){
+                let num1=s[j-1];
+                let num2=s[j+1];
+                let num=calculator(num1,num2,op[i]);
+                s.splice(j-1,3,num);
+                j--;
             }
         }
     }
+    s=Math.abs(+s);
+    answer=answer<s?s:answer;
 }
+
+console.log(answer);
