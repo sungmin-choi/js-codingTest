@@ -61,7 +61,6 @@ function bfs(maps){
 function solution(maps) {
     var answer = 0;
     answer=bfs(maps);
-    console.log(answer);
     return answer;
 }
 solution(maps);
