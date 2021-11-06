@@ -41,4 +41,8 @@ function solution(m, musicinfos) {
     return answer;
 }
 
-console.log(solution(m,musicinfos))
+//console.log(solution(m,musicinfos))
+
+let a=["C","C","B#","C","C","B"];
+let b=["C","C","B"];
+console.log(a.includes(b));
