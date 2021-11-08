@@ -27,4 +27,4 @@ function solution(s) {
     return answer;
 }
 
-console.log(solution("baaab"));
+console.log(solution("aaa"));
