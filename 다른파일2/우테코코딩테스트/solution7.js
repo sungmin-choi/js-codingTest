@@ -57,5 +57,5 @@ function solution(grid, clockwise) {
     return answer;
 }
 let answer = [];
-let grid=["1","123","45678"];
+
 
