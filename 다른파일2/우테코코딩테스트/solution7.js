@@ -56,6 +56,6 @@ function solution(grid, clockwise) {
     }
     return answer;
 }
-let answer = [];
+
 
 
