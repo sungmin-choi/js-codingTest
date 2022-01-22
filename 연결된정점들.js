@@ -12,7 +12,6 @@ class makeList{
         contains(vertex) {
           return !!this.vertices[vertex];
       }
-  
       addEdge(fromVertex, toVertex) {
           if (!this.contains(fromVertex) || !this.contains(toVertex)) {
               return;
