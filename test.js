@@ -1,30 +1,39 @@
-function queuePrinter(bufferSize, capacities, documents) {
-    if(documents.length === 0) return 0; // 처음 들어올때 document에 아무것도 없을때 0반환.
-    const workArr = [{  // 맨처음 document 인쇄작업목록(workArr)에 저장.
-              size: documents.shift(), // 처번째 document 사이즈 
-              count:1,  // 처음 들어와서 카운트 1 설정
-            }];
-    let time =1; // 총시간 
-
-    while(workArr.length >0){ // 인쇄작업목록 아무것도 없으면 탈출    
-        let currentWork = workArr[0]; // 맨처음 document
-        if(currentWork.count === bufferSize) workArr.shift(); //맨처음 document.count 가 bufferSize 와 같다면 탈출.
-        if(workArr.length<bufferSize && documents.length>0){// 인쇄작업목록 길이가 버퍼보다 짧고 documents에 문서가 아직 존재한다면 수행.
-          let workSize = 0;
-          workArr.forEach( work=> workSize+=work.size); //인쇄작업목록 안에 있는 문서들 크기 종합해서 workSize에 할당.
-  
-          if(workSize + documents[0]<=capacities){ // workSize 와 들어와야할 document 의 크기 합이 capacities 작다면 if문 수행
-            let pushWork = {
-              size: documents.shift(),
-              count:0,
-            }
-            workArr.push(pushWork); //pushWork 인쇄작업목록에 추가.
-          }
-        }
-        workArr.forEach((work)=>work.count++); //인쇄작업목록 안에 문서의 count 1씩 증가
-        time++; // 시간 1초 증가.
+let dfs = function (node) {
+  const result =[];
+  const q=[];
+  q.push(node);
+  while(q.length>0){
+    const currentNode = q.shift();
+    result.push(currentNode.value);
+    if(currentNode.children.length>0){
+      q.unshift(...currentNode.children);
     }
-
-
-    return time;
   }
+  return result;
+};
+
+// 이 아래 코드는 변경하지 않아도 됩니다. 자유롭게 참고하세요.
+let Node = function (value) {
+  this.value = value;
+  this.children = [];
+};
+
+// 위 Node 객체로 구성되는 트리는 매우 단순한 형태의 트리입니다.
+// membership check(중복 확인)를 따로 하지 않습니다.
+Node.prototype.addChild = function (child) {
+  this.children.push(child);
+  return child;
+};
+
+let root = new Node(1);
+let rootChild1 = root.addChild(new Node(2));
+let rootChild2 = root.addChild(new Node(3));
+let leaf1 = rootChild1.addChild(new Node(4));
+let leaf2 = rootChild1.addChild(new Node(5));
+let output = dfs(root);
+console.log(output); // --> [1, 2, 4, 5, 3]
+
+leaf1.addChild(new Node(6));
+rootChild2.addChild(new Node(7));
+output = dfs(root);
+console.log(output);
