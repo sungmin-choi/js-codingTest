@@ -1,12 +1,24 @@
-const func1=()=>{
-  let x=5;
-  const func2=()=>{
-    console.log(x);
+const powerSet = function (str) {
+  const newstr=[];
+  const result =[];
+  str.split('').forEach((ele)=>{
+    if(!newstr.includes(ele)){
+      newstr.push(ele);
+    }
+  })
+  newstr.sort();
+
+  const fixOrNot =(idx,arr)=>{
+    if(idx>=arr.length){
+      result.push(arr);
+      return;
+    }
+    fixOrNot(idx+1,arr);
+    fixOrNot(idx+1,arr+newstr[idx]);
   }
-  console.dir(func2);
-  return func2; 
-}
 
-const cls = func1();
+  fixOrNot(0,'');
+  
+  return result.sort();
 
-cls();
+};
