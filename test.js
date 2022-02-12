@@ -7,9 +7,9 @@ const powerSet = function (str) {
     }
   })
   newstr.sort();
-
+  console.log(newstr);
   const fixOrNot =(idx,arr)=>{
-    if(idx>=arr.length){
+    if(idx>=newstr.length){
       result.push(arr);
       return;
     }
@@ -22,3 +22,6 @@ const powerSet = function (str) {
   return result.sort();
 
 };
+
+let output1 = powerSet('abc');
+console.log(output1)
