@@ -1,28 +1,23 @@
-const quickSort =(start,end)=>{
-    if(start>=end-1) return;
-    let left = start+1;
-    const pivot = arr[start];
-    let right = end;
-    while(left<right){
-      while(arr[left]<pivot){
-        left++;
+const qs = (arr,start,end) =>{
+  if(start>=end){
+      return
+  }
+  const pivot = arr[start];
+  let left = start+1;
+  let right = end;
+  while(left<=right){
+      while(arr[left]<=pivot && left<=end){
+          left++;
       }
-      while(arr[right]>pivot){
-        right--;
+      while(arr[right]>=pivot && right>=start){
+          right--;
       }
       if(left>right){
-        [arr[right],arr[start]] = [arr[start],arr[right]];
-        //[result[right],result[start]] = [result[start],result[right]];
+          [arr[start],arr[right]]=[arr[right],arr[start]];
       }else{
-        [arr[left],arr[right]] = [arr[right],arr[left]];
-        //[result[left],result[right]] = [result[right],result[left]];
+          [arr[left],arr[right]]=[arr[right],arr[left]];
       }
-    }
-    quickSort(0,right);
-    quickSort(left,end);
-  
+  }
+  qs(arr,start,right-1);
+  qs(arr,right+1,end);
 }
-
-const arr = [0,3,4,10,8,2,6,1];
-quickSort(0,arr.length-1);
-console.log(arr);
