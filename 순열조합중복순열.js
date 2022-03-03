@@ -57,3 +57,6 @@ function permutation(arr, selectNum) {
     });
     return result;
   }
+
+
+console.log(combination([1,2,3,4,6],3));
