@@ -44,10 +44,9 @@ function combination(arr,selectNum){
 
 //중복순열
 
-function permutation(arr, selectNum) {
+function permutation2(arr, selectNum) {
     const result = [];
     if (selectNum === 1) return arr.map((v) => [v]);
-  
     arr.forEach((v, idx, arr) => {
       const fixed = v;
       const restArr = arr;
@@ -59,4 +58,4 @@ function permutation(arr, selectNum) {
   }
 
 
-console.log(combination([1,2,3,4,6],3));
+console.log(permutation(['a','b','c'],2));
