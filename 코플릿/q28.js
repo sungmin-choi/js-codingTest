@@ -5,7 +5,6 @@ const robotPath2 = function (room, src, sDir, dst, dDir) {
     const dy = [0,1,0,-1];
     const q = [[src[0],src[1],sDir]];
     room[src[0]][src[1]] = 's';
-    let lastDir;
     const [gx,gy] = dst;
     while(q.length>0){
         const [cx,cy,cdir] = q.shift();

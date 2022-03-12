@@ -61,6 +61,13 @@ class BinarySearchTree {
       // 이진 탐색 트리를 후위 순회하는 메서드를 만듭니다.
     postorder(callback) {
           //TODO: 전위 순회를 바탕으로 후위 순회를 구현하세요.
+          if (this.left) {
+            this.left.postorder(callback);
+          };
+          if (this.right) {
+            this.right.postorder(callback);
+          };
+          callback(this.value);
     }
   
   }
