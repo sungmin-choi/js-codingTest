@@ -50,7 +50,6 @@ function solution(no, works) {
   if (works.reduce((a, b) => a + b) <= no) {
     return 0;
   }
-  let result = 0;
   const heap = new MaxHeap();
   works.forEach((work) => heap.push(work));
 
@@ -62,6 +61,4 @@ function solution(no, works) {
   }
 
   return heap.heap.reduce((a, b) => a + b * b);
-
-  return result;
 }
