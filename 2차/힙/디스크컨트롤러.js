@@ -7,11 +7,12 @@ class MinHeap {
     this.heap.push(value);
     let currentIndex = this.heap.length - 1;
     let parentIndex = Math.floor(currentIndex / 2);
+
     while (
       parentIndex !== 0 &&
-      this.heap[parentIndex].cost < this.heap[currentIndex].cost
+      this.heap[currentIndex].cost < this.heap[parentIndex].cost
     ) {
-      this._swap(parentIndex, currentIndex);
+      this._swap(currentIndex, parentIndex);
       currentIndex = parentIndex;
       parentIndex = Math.floor(currentIndex / 2);
     }
@@ -20,30 +21,35 @@ class MinHeap {
   pop() {
     if (this.isEmpty()) return;
     if (this.heap.length === 2) return this.heap.pop();
-    const returnValue = this.heap[1];
+    const resultvalue = this.heap[1];
     this.heap[1] = this.heap.pop();
     let currentIndex = 1;
     let leftIndex = 2;
     let rightIndex = 3;
+
     while (
       (this.heap[leftIndex] &&
-        this.heap[leftIndex].cost < this.heap[currentIndex]) ||
+        this.heap[currentIndex].cost > this.heap[leftIndex]) ||
       (this.heap[rightIndex] &&
-        this.heap[rightIndex].cost < this.heap[currentIndex])
+        this.heap[currentIndex].cost > this.heap[rightIndex])
     ) {
       if (this.heap[leftIndex] === undefined) {
         this._swap(rightIndex, currentIndex);
+        currentIndex = rightIndex;
       } else if (this.heap[rightIndex] === undefined) {
         this._swap(leftIndex, currentIndex);
+        currentIndex = leftIndex;
       } else if (this.heap[leftIndex].cost < this.heap[rightIndex].cost) {
         this._swap(leftIndex, currentIndex);
+        currentIndex = leftIndex;
       } else {
         this._swap(rightIndex, currentIndex);
+        currentIndex = rightIndex;
       }
       leftIndex = currentIndex * 2;
       rightIndex = currentIndex * 2 + 1;
     }
-    return returnValue;
+    return resultvalue;
   }
 
   isEmpty() {
@@ -55,29 +61,29 @@ class MinHeap {
   }
 }
 
-function dijkstra(N, road) {
-  const heap = new MinHeap();
-  const dist = [...Array(N + 1)].map(() => Infinity);
-  dist[1] = 0;
-  heap.push({ node: 1, cost: 0 });
-  while (!heap.isEmpty()) {
-    const { node: currentNode, cost: currentCost } = heap.pop();
+function solution(jobs) {
+  const count = jobs.length;
+  const minHeap = new MinHeap();
+  jobs.sort((a, b) => a[0] - b[0]);
 
-    for (const [src, dest, cost] of road) {
-      const nextCost = cost + currentCost;
-      if (src === currentNode && dist[dest] > nextCost) {
-        heap.push({ node: dest, cost: nextCost });
-        dist[dest] = nextCost;
-      } else if (dest === currentNode && dist[src] > nextCost) {
-        heap.push({ node: src, cost: nextCost });
-        dist[src] = nextCost;
-      }
+  let time = 0;
+  let total = 0;
+  let complete = 0;
+
+  while (jobs.length || !minHeap.isEmpty()) {
+    while (jobs.length) {
+      if (jobs[0][0] === time) {
+        const curJob = jobs.shift();
+        minHeap.push({ start: curJob[0], cost: curJob[1] });
+      } else break;
     }
-  }
-  return dist;
-}
 
-function solution(N, road, K) {
-  const dist = dijkstra(N, road);
-  return dist.filter((x) => x <= K).length;
+    if (!minHeap.isEmpty() && time >= complete) {
+      const { start, cost } = minHeap.pop();
+      complete = cost + time;
+      total += complete - start;
+    }
+    time++;
+  }
+  return (total / count) >> 0;
 }
