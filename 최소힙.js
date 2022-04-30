@@ -25,24 +25,3 @@ function swap(idx1, idx2, arr) {
 
   }
   
-  const binaryHeap = function (arr) {
-    return arr.reduce((heap, item) => {
-      return insert(heap, item);
-    }, []);
-  };
-  
-  const heapSort = function (arr) {
-    let minHeap = binaryHeap(arr);
-    const result =[];
-    while(minHeap.length>0){
-        result.push(removeRoot(minHeap));
-        minHeap = binaryHeap(minHeap);
-    }
-    return result;
-    // TODO: 여기에 코드를 작성합니다.
-
-  };
-  
-
-  let output =heapSort([5, 4, 3, 2, 1]);
-  console.log(output); // --> [1, 2, 3, 4, 5]
