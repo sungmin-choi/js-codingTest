@@ -13,49 +13,47 @@
 
 조합은 선택했던 모든 것들은 다시는 선택하면 안되기 때문에 restArr이 fixer의 뒤에 값이면 된다.
 중복 순열은 현재 fixer까지 다시 선택할 수 있기 때문에 restArr이 기본 arr이면된다. (기본 arr은 forEach구문의 3번째 인자를 활용하면 된다.)*/
-function permutation(arr, selectNum){
-    let result =[];
-    if(selectNum===1) return arr.map((ele)=>[ele]);
-    arr.forEach((ele,index,arr)=>{
-        const fixer = ele;
-        const restArr = arr.filter((_,idx)=>idx!==index);
-        const permuationArr = permutation(restArr,selectNum-1);
-        const combinFixer = permuationArr.map(ele=>[fixer,...ele]);
-        result.push(...combinFixer);
-    });
-    return result;
+function permutation(arr, selectNum) {
+  let result = [];
+  if (selectNum === 1) return arr.map((ele) => [ele]);
+  arr.forEach((ele, index, arr) => {
+    const fixer = ele;
+    const restArr = arr.filter((_, idx) => idx !== index);
+    const permuationArr = permutation(restArr, selectNum - 1);
+    const combinFixer = permuationArr.map((ele) => [fixer, ...ele]);
+    result.push(...combinFixer);
+  });
+  return result;
 }
-
 
 //조합
 
-function combination(arr,selectNum){
-    let result =[];
-    if(selectNum===1) return arr.map((ele)=>[ele]);
-    arr.forEach((ele,index,arr)=>{
-        const fixer = ele;
-        const restArr = arr.slice(index+1);
-        const combinationArr = combination(restArr,selectNum-1);
-        const combinFixer = combinationArr.map((ele)=>[fixer,...ele]);
-        result.push(...combinFixer); 
-    });
-    return result;
-}   
+function combination(arr, selectNum) {
+  let result = [];
+  if (selectNum === 1) return arr.map((ele) => [ele]);
+  arr.forEach((ele, index, arr) => {
+    const fixer = ele;
+    const restArr = arr.slice(index + 1);
+    const combinationArr = combination(restArr, selectNum - 1);
+    const combinFixer = combinationArr.map((ele) => [fixer, ...ele]);
+    result.push(...combinFixer);
+  });
+  return result;
+}
 
 //중복순열
 
 function permutation2(arr, selectNum) {
-    const result = [];
-    if (selectNum === 1) return arr.map((v) => [v]);
-    arr.forEach((v, idx, arr) => {
-      const fixed = v;
-      const restArr = arr;
-      const permutationArr = permutation(restArr, selectNum - 1);
-      const combineFix = permutationArr.map((v) => [fixed, ...v]);
-      result.push(...combineFix);
-    });
-    return result;
-  }
+  const result = [];
+  if (selectNum === 1) return arr.map((v) => [v]);
+  arr.forEach((v, idx, arr) => {
+    const fixed = v;
+    const restArr = arr;
+    const permutationArr = permutation(restArr, selectNum - 1);
+    const combineFix = permutationArr.map((v) => [fixed, ...v]);
+    result.push(...combineFix);
+  });
+  return result;
+}
 
-
-console.log(permutation(['a','b','c'],2));
+console.log(permutation([1, 2, 3], 3));
